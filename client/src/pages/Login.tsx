@@ -13,7 +13,7 @@ import { API_BASE } from "../config/apiBase";
 import axios from "axios";
 
 export default function Register() {
-  const [username] = useAtom(usernameAtom);
+  const [username, setUsername] = useAtom(usernameAtom);
   const [password] = useAtom(passwordAtom);
   const [isLoggedin, setIsLoggedIn] = useAtom(loggedAtom);
   const [isLoading, setIsLoading] = useAtom(loadingAtom);
@@ -54,12 +54,14 @@ export default function Register() {
         signal,
         withCredentials: true,
       });
-      console.log(res.data);
+      setUsername(res.data.message);
+      setIsLoggedIn(true);
       setMessage("Please log out previous user.");
+
       setTimeout(() => {
         nav("/");
-      }, 2000);
-      setMessage("");
+      }, 3000);
+      setMessage("")
     } catch (error) {
       return;
     }

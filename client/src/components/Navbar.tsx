@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { useAtom } from "jotai";
-import { loggedAtom, mobileNavAtom, usernameAtom } from "../context/Context";
+import {
+  loadingAtom,
+  loggedAtom,
+  mobileNavAtom,
+  usernameAtom,
+} from "../context/Context";
 
 import Hamburger from "./Hamburger";
 
@@ -8,6 +13,12 @@ export default function Navbar() {
   const [loggedIn] = useAtom(loggedAtom);
   const [username] = useAtom(usernameAtom);
   const [mobileNav, setMobileNav] = useAtom(mobileNavAtom);
+
+  function handleClick() {
+    if (mobileNav) {
+      setMobileNav(false);
+    }
+  }
 
   return (
     <nav
@@ -22,33 +33,55 @@ export default function Navbar() {
         id="regular-view-nav"
         className="sm:flex gap-12 items-center justify-end absolute right-8 hidden "
       >
-        {loggedIn && <h2 className="text-center">Welcome, {username}!</h2>}
-        {!loggedIn && <Link to="/login">Login</Link>}
-        {loggedIn && <Link to="/dashboard">Dashboard</Link>}
-        {!loggedIn && <Link to="/register">Register</Link>}
-        {loggedIn && <Link to="/logout">Logout</Link>}
+        {loggedIn && (
+          <h2 className="text-center" onClick={() => handleClick}>
+            Welcome, {username}!
+          </h2>
+        )}
+        {!loggedIn && (
+          <Link to="/login" onClick={handleClick}>
+            Login
+          </Link>
+        )}
+        {loggedIn && (
+          <Link to="/dashboard" onClick={handleClick}>
+            Dashboard
+          </Link>
+        )}
+        {!loggedIn && (
+          <Link to="/register" onClick={handleClick}>
+            Register
+          </Link>
+        )}
+        {loggedIn && (
+          <Link to="/logout" onClick={handleClick}>
+            Logout
+          </Link>
+        )}
       </div>
       {mobileNav && (
         <div
           id="mobile-nav"
           className="flex flex-col justify-center items-center relative h-screen w-screen gap-20 sm:hidden"
         >
-          <h1 onClick={() => setMobileNav((prev) => !prev)} className="absolute pb-4 top-5">
+          <h1 onClick={handleClick} className="absolute pb-4 top-5">
             <Link to="/">List-Maker</Link>
           </h1>
 
-          {loggedIn && <h2 className="text-center absolute top-20">Welcome {username}!</h2>}
+          {loggedIn && (
+            <h2 className="text-center absolute top-20">Welcome {username}!</h2>
+          )}
 
-          <div onClick={() => setMobileNav((prev) => !prev)}>
+          <div onClick={handleClick}>
             {!loggedIn && <Link to="/login">Login</Link>}
           </div>
-          <div onClick={() => setMobileNav((prev) => !prev)}>
+          <div onClick={handleClick}>
             {loggedIn && <Link to="/dashboard">Dashboard</Link>}
           </div>
-          <div onClick={() => setMobileNav((prev) => !prev)}>
+          <div onClick={handleClick}>
             {!loggedIn && <Link to="/register">Register</Link>}
           </div>
-          <div onClick={() => setMobileNav((prev) => !prev)}>
+          <div onClick={handleClick}>
             {loggedIn && <Link to="/logout">Logout</Link>}
           </div>
         </div>
