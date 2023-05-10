@@ -24,7 +24,7 @@ export default function Register() {
   async function checkLogout() {
     const controller = new AbortController();
     const signal = controller.signal;
-    setMessage("")
+    setMessage("");
     try {
       await axios.get(`${API_BASE}/auth`, {
         signal,
@@ -34,7 +34,7 @@ export default function Register() {
       setTimeout(() => {
         nav("/");
       }, 2000);
-      setMessage("")
+      setMessage("");
     } catch (error) {
       return;
     }

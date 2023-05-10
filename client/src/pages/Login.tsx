@@ -48,20 +48,20 @@ export default function Register() {
   async function checkLogout() {
     const controller = new AbortController();
     const signal = controller.signal;
-    setMessage("")
+    setMessage("");
     try {
       const res = await axios.get(`${API_BASE}/auth`, {
         signal,
         withCredentials: true,
       });
-      console.log(res.data)
-      setMessage("Please log out previous user.")
+      console.log(res.data);
+      setMessage("Please log out previous user.");
       setTimeout(() => {
-        nav("/")
-      },2000)
-      setMessage("")
+        nav("/");
+      }, 2000);
+      setMessage("");
     } catch (error) {
-      return
+      return;
     }
   }
 
@@ -71,7 +71,7 @@ export default function Register() {
 
   return (
     <div className="flex justify-center items-center w-full h-3/4">
-      <AuthForm type="Login" onSubmit={handleLogin} error={message} />;
+      <AuthForm type="Login" onSubmit={handleLogin} error={message} />
     </div>
   );
 }
