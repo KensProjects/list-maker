@@ -13,7 +13,7 @@ import { User } from "../models/userModel";
 
 export async function checkServer(req: IRequest, res: Response) {
   try {
-    return res.status(200).json({message:"Server up!"})
+    return res.status(200).json({ message: "Server up!" });
   } catch (error) {
     console.log("error");
   }
@@ -51,8 +51,10 @@ export async function loginUser(req: IRequest, res: Response) {
       .cookie("token", token, {
         expires: new Date(Date.now() + hr),
         httpOnly: true,
-        sameSite:true,
-        secure:true
+        sameSite: "strict",
+        secure: true,
+        signed: true,
+        domain: ".vercel.app",
       })
       .json({ message: `Login successful!` });
   } catch (error) {
@@ -85,8 +87,10 @@ export async function registerUser(req: IRequest, res: Response) {
       .cookie("token", token, {
         expires: new Date(Date.now() + hr),
         httpOnly: true,
-        sameSite:true,
-        secure:true
+        sameSite: "strict",
+        secure: true,
+        signed: true,
+        domain: ".vercel.app",
       })
       .json({
         message: `Congratulations, ${username}! Your account has been created.`,
