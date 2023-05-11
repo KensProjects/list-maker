@@ -54,7 +54,7 @@ export async function loginUser(req: IRequest, res: Response) {
         sameSite: "strict",
         secure: true,
         signed: true,
-        domain: ".vercel.app",
+        domain: ".onrender.com",
       })
       .json({ message: `Login successful!` });
   } catch (error) {
@@ -90,7 +90,7 @@ export async function registerUser(req: IRequest, res: Response) {
         sameSite: "strict",
         secure: true,
         signed: true,
-        domain: ".vercel.app",
+        domain: ".onrender.com",
       })
       .json({
         message: `Congratulations, ${username}! Your account has been created.`,
