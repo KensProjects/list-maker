@@ -16,7 +16,7 @@
     "start": "node dist/server.js",
     "client": "npm --prefix ../client run dev",
     "dev": "concurrently \"npm run dev-server\" \"npm run client\"",
-    "build": " npm i -g typescript && tsc"
+    "build": "npx tsc"
   },
   "keywords": [
     "MERN, Tailwind, Typescript, React, Vite, Express, MongoDB, Mongoose, jsonwebtoken"
