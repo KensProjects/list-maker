@@ -13,7 +13,7 @@
   },
   "scripts": {
     "dev-server": "nodemon src/server.ts",
-    "start": "node dist/src/server.js",
+    "start": "node dist/server.js",
     "client": "npm --prefix ../client run dev",
     "dev": "concurrently \"npm run dev-server\" \"npm run client\"",
     "build": "tsc"
