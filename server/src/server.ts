@@ -18,6 +18,7 @@ import {
 
 import { createEntry, deleteEntry } from "./controllers/listControllers";
 import { checkCookie } from "./middleware/checkCookie";
+import { checkAuth } from "./middleware/checkAuth";
 import { connectDB } from "./config/db";
 
 const port: number = Number(process.env.PORT) ?? 7500;
@@ -26,15 +27,20 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
+app.use(
+  cors({
+    credentials: true,
+    origin: [process.env.ORIGIN as string, "http://localhost:5173"],
+  })
+);
 
 connectDB();
 
 app.get("/", checkServer);
 
-app.post("/login", loginUser);
+app.post("/login", checkAuth, loginUser);
 
-app.post("/register", registerUser);
+app.post("/register", checkAuth, registerUser);
 
 app.get("/auth", checkCookie, authCheck);
 

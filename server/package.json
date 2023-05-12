@@ -2,7 +2,7 @@
   "name": "list-maker-server",
   "version": "1.0.0",
   "description": "A simple Typescript MERN stack application that allows unique users to create simple notes, with authenication.",
-  "main": "server.ts",
+  "main": "dist/server.js",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
@@ -13,11 +13,10 @@
   },
   "scripts": {
     "dev-server": "nodemon src/server.ts",
-    "server": " ts-node src/server.ts",
+    "start": "node dist/src/server.js",
     "client": "npm --prefix ../client run dev",
     "dev": "concurrently \"npm run dev-server\" \"npm run client\"",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm install && npx tsc"
+    "build": "tsc"
   },
   "keywords": [
     "MERN, Tailwind, Typescript, React, Vite, Express, MongoDB, Mongoose, jsonwebtoken"

@@ -13,11 +13,11 @@ export async function checkCookie(
 ) {
   const token = req.cookies.token;
   try {
-    if (!token) return res.status(403).json({ message: "Error! Logging out!" });
+    if (!token) return res.status(403).json({ message: "Token error!" });
     const user = jwt.verify(token, process.env.SECRET as string);
     req.user = user;
     next();
   } catch (e) {
-    return res.status(403).json({ message: "Error" });
+    return res.status(403).json({ message: "Token error!" });
   }
 }

@@ -26,18 +26,18 @@ export async function getUser(req: IRequest, res: Response) {
     if (!user) return res.status(403).json({ message: "Unauthorized access!" });
     res.json(user);
   } catch (error) {
-    return res.json({ message: "Unauthirized access!" });
+    return res.json({ message: "Unauthorized access!" });
   }
 }
 export async function loginUser(req: IRequest, res: Response) {
   try {
     const { username, password } = req.body;
     if (!username || !password)
-      return res.status(401).json("Please fill all fields!");
+      return res.status(401).json("Please fill in all fields!");
     const user = await User.findOne({ username: username });
     if (!user) return res.status(403).json({ message: "Login failed!" });
     const isPass = await bcrypt.compare(password, user.password);
-    if (!isPass) return res.status(403).json({ message: "Pass failed!" });
+    if (!isPass) return res.status(403).json({ message: "Login failed!" });
     const payload = {
       id: user._id,
       username: user.username,
@@ -51,10 +51,7 @@ export async function loginUser(req: IRequest, res: Response) {
       .cookie("token", token, {
         expires: new Date(Date.now() + hr),
         httpOnly: true,
-        sameSite: "strict",
         secure: true,
-        signed: true,
-        domain: ".onrender.com",
       })
       .json({ message: `Login successful!` });
   } catch (error) {
@@ -79,32 +76,32 @@ export async function registerUser(req: IRequest, res: Response) {
       username: createdUser.username,
       password: createdUser.password,
     };
+
     const token = jwt.sign(payload, process.env.SECRET as string, {
       expiresIn: "1h",
     });
     const hr = 1000 * 60 * 60; //1 hour
-    return res
+
+     return res
       .cookie("token", token, {
         expires: new Date(Date.now() + hr),
         httpOnly: true,
-        sameSite: "strict",
         secure: true,
-        signed: true,
-        domain: ".onrender.com",
       })
       .json({
         message: `Congratulations, ${username}! Your account has been created.`,
       });
   } catch (error) {
-    return res.json({ message: "Error registering user!" });
+    console.log(error)
+    return res.status(401).json({message:"Registration error!"})
   }
 }
 
-export async function logoutUser(req: IRequest, res: Response) {
+export async function logoutUser( res: Response) {
   try {
     return res
       .clearCookie("token")
-      .json({ message: "Logged out! Redirecting..." });
+      .json({ message: "Logged out!" });
   } catch (error) {
     return res.json({ message: "Logout error!" });
   }
