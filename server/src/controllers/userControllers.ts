@@ -63,8 +63,8 @@ export async function registerUser(req: IRequest, res: Response) {
     const { username, password } = req.body;
     if (!username || !password)
       return res.status(401).json("Please fill all fields!");
-    const user = await User.findOne({ username: username });
-    if (user) return res.status(403).json({ message: "Registration failed!" });
+    // const user = await User.findOne({ username: username });
+    // if (user) return res.status(403).json({ message: "Registration failed!" });
     const protectedPass = await bcrypt.hash(password, 15);
     return res.json({message: protectedPass, username, password})
     // const createdUser = await User.create({
