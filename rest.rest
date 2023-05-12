@@ -1,9 +1,0 @@
-GET https://kensprojects-list-maker.onrender.com
-###
-POST https://kensprojects-list-maker.onrender.com/register
-Content-Type: application/json
-
-{
-    "username":"sgsdgdfgdfg",
-    "password":"buildfgdfgd1"
-}

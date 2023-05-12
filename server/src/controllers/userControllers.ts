@@ -63,36 +63,33 @@ export async function registerUser(req: IRequest, res: Response) {
     const { username, password } = req.body;
     if (!username || !password)
       return res.status(401).json("Please fill all fields!");
-    // const user = await User.findOne({ username: username });
-    // if (user) return res.status(403).json({ message: "Registration failed!" });
+    const user = await User.findOne({ username: username });
+    if (user) return res.status(403).json({ message: "Registration failed!" });
     const protectedPass = await bcrypt.hash(password, 15);
-    return res.json({message: protectedPass, username, password})
-    // const createdUser = await User.create({
-    //   username: username,
-    //   password: protectedPass,
-    //   list: [],
-    // });
-    // const payload = {
-    //   id: createdUser._id,
-    //   username: createdUser.username,
-    //   password: createdUser.password,
-    // };
+    const createdUser = await User.create({
+      username: username,
+      password: protectedPass,
+      list: [],
+    });
+    const payload = {
+      id: createdUser._id,
+      username: createdUser.username,
+      password: createdUser.password,
+    };
 
-    // const token = jwt.sign(payload, process.env.SECRET as string, {
-    //   expiresIn: "1h",
-    // });
-    // const hr = 1000 * 60 * 60; //1 hour
-    // res.json({token:token})
-
-    //  return res
-    //   .cookie("token", token, {
-    //     expires: new Date(Date.now() + hr),
-    //     httpOnly: true,
-    //     secure: true,
-    //   })
-    //   .json({
-    //     message: `Congratulations, ${username}! Your account has been created.`,
-    //   });
+    const token = jwt.sign(payload, process.env.SECRET as string, {
+      expiresIn: "1h",
+    });
+    const hr = 1000 * 60 * 60; //1 hour
+     return res
+      .cookie("token", token, {
+        expires: new Date(Date.now() + hr),
+        httpOnly: true,
+        secure: true,
+      })
+      .json({
+        message: `Congratulations, ${username}! Your account has been created.`,
+      });
   } catch (error) {
     console.log(error)
     return res.status(401).json({message:"Registration error!"})
