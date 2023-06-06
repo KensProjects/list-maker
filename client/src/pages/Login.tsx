@@ -23,8 +23,8 @@ export default function Register() {
 
   async function handleLogin(e: FormEvent) {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       await axios.post(
         `${API_BASE}/login`,
         {
@@ -35,14 +35,10 @@ export default function Register() {
       );
       setIsLoggedIn(true);
       nav("/dashboard");
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
     } catch (error) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
       setMessage("Error logging in user!");
+    } finally {
+      setIsLoading(false);
     }
   }
   async function checkLogout() {
@@ -61,7 +57,7 @@ export default function Register() {
       setTimeout(() => {
         nav("/");
       }, 3000);
-      setMessage("")
+      setMessage("");
     } catch (error) {
       return;
     }

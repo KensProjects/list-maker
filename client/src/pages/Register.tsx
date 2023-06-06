@@ -37,7 +37,7 @@ export default function Register() {
       setTimeout(() => {
         nav("/");
       }, 3000);
-      setMessage("")
+      setMessage("");
     } catch (error) {
       return;
     }
@@ -57,14 +57,10 @@ export default function Register() {
       );
       setIsLoggedIn(true);
       nav("/dashboard");
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
     } catch (error) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
       setMessage("Error registering user!");
+    } finally {
+      setIsLoading(false);
     }
   }
 

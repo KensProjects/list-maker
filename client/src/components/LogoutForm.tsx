@@ -22,8 +22,9 @@ export default function LogoutForm() {
   async function logoutUser() {
     const controller = new AbortController();
     const signal = controller.signal;
+    setIsLoading(true);
     try {
-      setIsLoading(true);
+
       setMessage("");
       await axios.get(`${API_BASE}/logout`, {
         signal,
@@ -33,20 +34,18 @@ export default function LogoutForm() {
       setPassword("");
       setLoggedIn(false);
       nav("/login");
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
+
       return () => {
         controller.abort();
       };
     } catch (error) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
+
       setMessage("Error while logging out!");
       setTimeout(() => {
         setMessage("");
       }, 1000);
+    } finally {
+      setIsLoading(false)
     }
   }
 

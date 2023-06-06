@@ -19,25 +19,24 @@ export default function ListArray() {
         withCredentials: true,
       });
       setList(res.data.list);
-      setIsLoading(false);
       return () => {
         controller.abort();
       };
     } catch (error) {
+    } finally {
       setIsLoading(false);
     }
   }
   async function deleteEntry(id: string) {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const res = await axios.delete(`${API_BASE}/dashboard/${id}`, {
         withCredentials: true,
       });
       setList(res.data.list);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000 / 2);
     } catch (error) {
+      console.error(error);
+    } finally {
       setIsLoading(false);
     }
   }
@@ -51,7 +50,10 @@ export default function ListArray() {
       <ul className="w-full h-fit px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-center items-center absolute gap-y-4">
         {list?.map((entry) => {
           return (
-            <li key={entry._id} className="flex justify-center items-center  h-fit">
+            <li
+              key={entry._id}
+              className="flex justify-center items-center  h-fit"
+            >
               {
                 <Entry
                   content={entry.entry}

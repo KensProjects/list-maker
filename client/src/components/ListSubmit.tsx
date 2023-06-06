@@ -10,9 +10,9 @@ export default function ListSubmit() {
   const [isLoading, setIsLoading] = useAtom(loadingAtom);
 
   async function postEntry(e: FormEvent) {
+    e.preventDefault();
+    setIsLoading(true);
     try {
-      e.preventDefault();
-      setIsLoading(true);
       const res = await axios.post(
         `${API_BASE}/dashboard`,
         {
@@ -22,10 +22,9 @@ export default function ListSubmit() {
       );
       setList(res.data.list);
       setEntry("");
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000 / 2);
     } catch (error) {
+      console.error(error);
+    } finally {
       setIsLoading(false);
     }
   }
@@ -43,7 +42,7 @@ export default function ListSubmit() {
         id="entry"
         required
         maxLength={80}
-        rows={5}
+        rows={10}
         cols={20}
       />
       <button

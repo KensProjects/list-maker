@@ -8,20 +8,12 @@ import Welcome from "./pages/Welcome";
 import { loadingAtom } from "./context/Context";
 import { useAtom } from "jotai";
 import Spinner from "./components/Spinner";
-import { useEffect } from "react";
+
 
 function App() {
-  const [isLoading, setIsLoading] = useAtom(loadingAtom);
+  const [isLoading] = useAtom(loadingAtom);
 
-  function handleLoading() {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }
-  
-  useEffect(() => {
-    handleLoading();
-  }, []);
+
 
   if (isLoading) return <Spinner />;
 

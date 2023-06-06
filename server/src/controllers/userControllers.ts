@@ -81,7 +81,7 @@ export async function registerUser(req: IRequest, res: Response) {
       expiresIn: "1h",
     });
     const hr = 1000 * 60 * 60; //1 hour
-     return res
+    return res
       .cookie("token", token, {
         expires: new Date(Date.now() + hr),
         httpOnly: true,
@@ -91,18 +91,17 @@ export async function registerUser(req: IRequest, res: Response) {
         message: `Congratulations, ${username}! Your account has been created.`,
       });
   } catch (error) {
-    console.log(error)
-    return res.status(401).json({message:"Registration error!"})
+    console.log(error);
+    return res.status(401).json({ message: "Registration error!" });
   }
 }
 
-export async function logoutUser( res: Response) {
+export async function logoutUser(req:IRequest, res: Response) {
   try {
-    return res
-      .clearCookie("token")
-      .json({ message: "Logged out!" });
+    const { username } = req.user as IUsername;
+    return res.clearCookie("token").json({ message: `${username} logged out!` });
   } catch (error) {
-    return res.json({ message: "Logout error!" });
+    res.json({ message: "Logout error!" });
   }
 }
 export async function authCheck(req: IRequest, res: Response) {

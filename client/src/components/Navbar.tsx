@@ -35,7 +35,7 @@ export default function Navbar() {
       >
         {loggedIn && (
           <h2 className="text-center" onClick={() => handleClick}>
-            Welcome, {username}!
+            {username}
           </h2>
         )}
         {!loggedIn && (
@@ -64,25 +64,25 @@ export default function Navbar() {
           id="mobile-nav"
           className="flex flex-col justify-center items-center relative h-screen w-screen gap-20 sm:hidden"
         >
-          <h1 onClick={handleClick} className="absolute pb-4 top-5">
-            <Link to="/">List-Maker</Link>
-          </h1>
+          <div className="w-full h-full flex flex-col justify-center items-center gap-8">
+            <h1 onClick={handleClick} className="pb-4 top-5">
+              <Link to="/">List-Maker</Link>
+            </h1>
 
-          {loggedIn && (
-            <h2 className="text-center absolute top-20">Welcome {username}!</h2>
-          )}
+            {loggedIn && <h2 className="text-center top-20">{username}</h2>}
 
-          <div onClick={handleClick}>
-            {!loggedIn && <Link to="/login">Login</Link>}
-          </div>
-          <div onClick={handleClick}>
-            {loggedIn && <Link to="/dashboard">Dashboard</Link>}
-          </div>
-          <div onClick={handleClick}>
-            {!loggedIn && <Link to="/register">Register</Link>}
-          </div>
-          <div onClick={handleClick}>
-            {loggedIn && <Link to="/logout">Logout</Link>}
+            <div onClick={handleClick}>
+              {!loggedIn && <Link to="/login">Login</Link>}
+            </div>
+            <div onClick={handleClick}>
+              {loggedIn && <Link to="/dashboard">Dashboard</Link>}
+            </div>
+            <div onClick={handleClick}>
+              {!loggedIn && <Link to="/register">Register</Link>}
+            </div>
+            <div onClick={handleClick}>
+              {loggedIn && <Link to="/logout">Logout</Link>}
+            </div>
           </div>
         </div>
       )}
